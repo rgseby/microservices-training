@@ -5,7 +5,7 @@ import bodyParser from 'body-parser';
 const app: Express = express();
 app.use(bodyParser.json());
 
-let posts: Array<Record<string, string>> = [];
+const posts: Record<string, { id: string, title: string}> = {};
 
 app.get('/posts', (req: Request, res: Response) => {
     res.send(posts);
@@ -13,9 +13,9 @@ app.get('/posts', (req: Request, res: Response) => {
 
 app.post('/posts', (req: Request, res: Response) => {
     const id = randomBytes(4).toString('hex');
-    const { title } = req.body
-    posts.push({ id, title });
-    res.status(201).send(posts[posts.length - 1]);
+    const title = req.body.title;
+    posts[id] = { id, title };
+    res.status(201).send(posts);
 });
 
 app.listen(4000, () => {
