@@ -1,9 +1,11 @@
 import express, { Express, Request, Response } from 'express';
 import { randomBytes } from 'crypto';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 
 const app: Express = express();
 app.use(bodyParser.json());
+app.use(cors());
 
 const posts: Record<string, { id: string, title: string}> = {};
 
