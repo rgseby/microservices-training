@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { render } from "@testing-library/react";
+import CommentCreate from "./CommentCreate";
+import CommentList from "./CommentList";
 
 export default () => {
     const [posts, setPosts] = useState({});
@@ -23,6 +25,8 @@ export default () => {
         >
             <div className="card-body">
                 <h3>{(post as any).title}</h3>
+                <CommentList postId={(post as any).id} />
+                <CommentCreate postId={(post as any).id} />
             </div>
         </div>
     })
