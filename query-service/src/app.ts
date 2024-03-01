@@ -9,7 +9,8 @@ app.use(cors());
 /* Data structure */
 type Comment = {
     id: string,
-    content: string
+    content: string,
+    status: string
 };
 
 type Post = {
@@ -35,9 +36,19 @@ app.post('/events', (req: Request, res: Response) => {
     }
 
     if (type === 'CommentCreated') {
-        const { id, content, postId } = data;
+        const { id, content, postId, status } = data;
 
-        dbEntries[postId].comments.push({ id, content });
+        dbEntries[postId].comments.push({ id, content, status });
+    }
+
+    if (type === 'CommentUpdated') {
+        const { id, content, postId, status } = data;
+
+        const comment = dbEntries[postId].comments.find(comment => {
+            return comment.id === id;
+        });
+        comment!.status = status;
+        comment!.content = content;
     }
 
     console.log(dbEntries);
